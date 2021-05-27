@@ -13,6 +13,10 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
+      )
     );
   }
 }
@@ -41,15 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
-  _openTransactionFormModal(BuildContext context){
-    showModalBottomSheet(
-      context: context, 
-      builder: (_){
-        return TransactionForm(null);
-      },
-    );
-  }
-
   _addTransaction(String title, double value){
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
@@ -61,6 +56,17 @@ class _MyHomePageState extends State<MyHomePage> {
     setState((){
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+  }
+
+  _openTransactionFormModal(BuildContext context){
+    showModalBottomSheet(
+      context: context, 
+      builder: (_){
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
   @override
